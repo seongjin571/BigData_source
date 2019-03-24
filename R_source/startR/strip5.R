@@ -1,0 +1,6 @@
+head(mtcars)
+car_cor<-cor(mtcars)
+round(car_cor,2)
+install.packages("corrplot")
+library(corrplot)
+corrplot(car_cor)

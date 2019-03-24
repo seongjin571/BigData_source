@@ -1,0 +1,81 @@
+#install.packages("plotly")
+library(plotly)
+library(ggplot2)
+p<-ggplot(data=mpg,aes(x=displ,y=hwy,col=drv))+geom_point()
+p<-ggplot(data=mpg,aes(x=displ,y=hwy,col=drv))+geom_line()
+ggplotly(p)
+p<-ggplot(data=diamonds,aes(x=cut,fill=clarity))+
+  geom_bar(position="dodge")
+ggplotly(p)
+install.packages("dygraphs")
+#library(dygraphs)
+economics<-ggplots::economics
+head(economics)
+#library(xts)
+eco<-xts(economics$unemploy,order.by=economics$date)
+head(eco)
+dygraph(eco)
+#install.packages("ggiraphExtra")
+library(ggiraphExtra)
+library(tibble)
+crime<-rownames_to_column(USArrests,var="state")
+crime$state<-tolower(crime$state)
+crime$state
+library(ggplot2)
+states_map<-map_data("state")
+ggChoropleth(data=crime,
+             aes(fill=Murder,
+                 map_id=state),
+             map=states_map)
+#install.packages("stringi")
+#install.packages("devtools")
+devtools::install_github("cardiomoon/kormaps2014")
+library(kormaps2014)
+str(changeCode(korpop1))
+library(dplyr) 
+korpop1 <- rename(korpop1,
+                  pop = 총인구_명,
+                  name = 행정구역별_읍면동) 
+ggChoropleth(data=korpop1,
+             aes(fill=pop,
+                 map_id=code,
+                 tooltip=name),
+             map=kormap1)
+install.packages("ggmap")
+library(ggmap)
+library(stringr)
+loc<-read.csv("Data/서울_강동구_공영주차장_위경도.csv",header=T)
+kd<-get_map("Amsa-dong",zoom=14,maptype="roadmap")
+kor.map<-ggmap(kd)+geom_point(data=loc,aes(x=LON,y=LAT),
+                              size=3,alpha=0.7,color="red")
+kor.map+geom_text(data=loc,aes(x=LON,y=LAT+0.001,label=주차장명),size=3)
+ggsave("C:/Users/AtivBook/Desktop/bigData/R")
+seoul<-read.csv("Data/지역별장애인도서관정보.csv")
+k<-get_map("Seoul",zoom=11,maptype = "roadmap")
+kor.map<-ggmap(k)+geom_point(data=seoul,aes(x=LON,y=LAT),
+                             size=3,alpha=0.5,color="blue")
+kor.map+geom_text(data=seoul,aes(x=LON,y=LAT+0.01,label=자치구명),size=4)
+pop<-read.csv('Data/지역별인구현황_2014_4월기준.csv',header=T)
+pop
+lon<-pop$LON
+lat<-pop$LAT
+data<-pop$총인구수
+df<-data.frame(lon,lat,data)
+df
+map1<-get_map("Jeonju",zoom=7,maptype = 'roadmap')
+map1<-ggmap(map1)
+map1+geom_point(aes(x=lon,y=lat,colour=data,size=data),data=df)
+  #geom_text(data=pop,aes(x=lon,y=lat+0.1,label=지역),size=3)
+pop
+jeju<-read.csv("Data/제주도여행코스_1일차.csv",header=T)
+jeju1<-get_map("Hallasan",zoom=10,maptype = "hybrid")
+jeju.map<-ggmap(jeju1)+geom_point(data=jeju,aes(x=LON,y=LAT),size=3,
+                                  alpha=0.7,col="red")
+jeju.map+geom_path(data=jeju,aes(x=LON,y=LAT),size=1,linetype=2,col="black")+
+  geom_text(data=jeju,aes(x=LON,y=LAT,label=장소),size=3)
+#문제
+subway<-read.csv("Data/서울지하철2호선위경도정보.csv")
+subwayMap<-get_map("Seoul",zoom=12,maptype = "roadmap")
+subway.map<-ggmap(subwayMap)+geom_point(data=subway,aes(x=LON,y=LAT),size=3,alpha=0.7,col="red")
+subway.map+geom_path(data=subway,aes(x=LON,y=LAT),size=1,linetype=2,col="black")+
+  geom_text(data=subway,aes(x=LON,y=LAT+0.1,label=역명),size=3)

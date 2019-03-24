@@ -1,0 +1,10 @@
+first=int(input('첫번째 숫자를 입력하세요'))
+second=int(input('두번째 숫자를 입력하세여'))
+pul=first+second
+min=first-second
+mul=first*second
+div=first/second
+print(first,"+",second,"=",pul)
+print(first,"-",second,"=",min)
+print(first,"x",second,"=",mul)
+print(first,"/",second,"=",div)
